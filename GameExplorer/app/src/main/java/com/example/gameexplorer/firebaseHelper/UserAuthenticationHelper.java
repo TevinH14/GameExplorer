@@ -19,7 +19,7 @@ public class UserAuthenticationHelper{
         return checkUserStatus();
     }
 
-    public  void signOutUser(){
+    public static void signOutUser(){
        mAuth.signOut();
     }
 

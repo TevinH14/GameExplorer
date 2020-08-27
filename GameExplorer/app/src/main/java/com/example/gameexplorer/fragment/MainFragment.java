@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.gameexplorer.R;
+import com.example.gameexplorer.activity.SignInActivity;
 import com.example.gameexplorer.activity.SignUpActivity;
 
 public class MainFragment extends Fragment implements View.OnClickListener{
@@ -55,7 +56,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
             userChoiceIntent = new Intent(getContext(),SignUpActivity.class);
 
         }else if(v.getId() ==  R.id.btn_signIn_main){
-           // userChoiceIntent = new Intent(getContext(),SignUpActivity.class);
+           userChoiceIntent = new Intent(getContext(), SignInActivity.class);
         }
         if(userChoiceIntent != null){
             startActivity(userChoiceIntent);

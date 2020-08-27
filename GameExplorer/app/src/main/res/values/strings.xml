@@ -21,6 +21,8 @@
     <string name="password_dont_match">Password don\'t match</string>
     <string name="nothing_blank">Please don\'t leave any fields empty</string>
     <string name="less_then_6">pass word is less then 6 please have a password with more then 6 characters</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="incorrect_email_or_password">Email or password is incorrect</string>
 
 
     <!-- Home Fragment-->
