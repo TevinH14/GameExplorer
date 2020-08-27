@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "218442054118",
+    "firebase_url": "https://game-explorer-758a7.firebaseio.com",
+    "project_id": "game-explorer-758a7",
+    "storage_bucket": "game-explorer-758a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218442054118:android:e03f2954db1b3e35697e27",
+        "android_client_info": {
+          "package_name": "com.example.gameexplorer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218442054118-c5o3oc11i358ddc8ooj3u0s53drg21cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-30pLDUQJThc9hwKtRrxvOeZZtvATBh4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218442054118-c5o3oc11i358ddc8ooj3u0s53drg21cn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

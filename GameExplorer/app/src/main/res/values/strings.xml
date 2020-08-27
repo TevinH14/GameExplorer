@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Game Explorer</string>
+    <!--main,sign up and sign in and password forgot fragments -->
+    <string name="sign_up">Sign up</string>
+    <string name="sign_in">Sign in</string>
+    <string name="first_name">FirstName</string>
+    <string name="create_an_account">Create An Account</string>
+    <string name="last_name">LastName</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="back">back</string>
+
+    <!--across app use -->
+    <string name="todo">TODO</string>
+
+    <!--Toast messages -->
+    <string name="blank_name">please don\'t leave first or last name blank</string>
+
+
+    <!-- Home Fragment-->
+
+
+
 </resources>
