@@ -16,10 +16,14 @@
 
     <!--Toast messages -->
     <string name="blank_name">please don\'t leave first or last name blank</string>
+    <string name="blank_email">Don\'t leave email blank or check if its correct</string>
+    <string name="blank_password">Don\'t leave password blank</string>
+    <string name="password_dont_match">Password don\'t match</string>
+    <string name="nothing_blank">Please don\'t leave any fields empty</string>
+    <string name="less_then_6">pass word is less then 6 please have a password with more then 6 characters</string>
 
 
     <!-- Home Fragment-->
-
 
 
 </resources>

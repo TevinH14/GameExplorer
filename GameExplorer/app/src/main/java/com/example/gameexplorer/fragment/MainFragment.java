@@ -41,6 +41,9 @@ public class MainFragment extends Fragment implements View.OnClickListener{
 
             Button btn_signUp = mainView.findViewById(R.id.btn_signUp_main);
             Button btn_signIn = mainView.findViewById(R.id.btn_signIn_main);
+
+            btn_signUp.setOnClickListener(this);
+            btn_signIn.setOnClickListener(this);
         }
     }
 

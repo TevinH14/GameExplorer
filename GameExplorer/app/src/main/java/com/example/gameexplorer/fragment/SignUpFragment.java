@@ -1,6 +1,7 @@
 package com.example.gameexplorer.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.gameexplorer.R;
+import com.example.gameexplorer.activity.HomeActivity;
+import com.example.gameexplorer.firebaseHelper.RealTimeDatabaseHelper;
+import com.example.gameexplorer.firebaseHelper.UserAuthenticationHelper;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class SignUpFragment extends Fragment implements View.OnClickListener {
@@ -83,15 +87,56 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             String password = et_password.getText().toString();
             String confirmPassword = et_confirmPassword.getText().toString();
 
-            String fullName;
+            String fullName = "";
+            boolean nameCheck = false;
+            boolean emailCheck = false;
+            boolean passwordCheck = false;
+            boolean passwordMatch = false;
 
             if(!fName.matches("") && !lName.matches("")){
                 fullName = fName +" "+lName;
+                nameCheck = true;
             } else {
                 Toast.makeText(mContext, R.string.blank_name, Toast.LENGTH_SHORT).show();
             }
-        }else{
+            if(email.matches("") || !email.contains(".com") || !email.contains("@")){
+                Toast.makeText(mContext, R.string.blank_email, Toast.LENGTH_SHORT).show();
+            }else {
+                emailCheck = true;
+            }
+            if(password.matches("") || confirmPassword.matches("")){
+                Toast.makeText(mContext, R.string.blank_password, Toast.LENGTH_SHORT).show();
+            }else {
+                passwordCheck = true;
+            }
+            if(password.equals(confirmPassword)){
+                passwordMatch = true;
+            }else {
+                Toast.makeText(mContext, R.string.password_dont_match, Toast.LENGTH_SHORT).show();
+            }
+            if(password.length() < 6){
+                Toast.makeText(mContext, R.string.less_then_6, Toast.LENGTH_SHORT).show();
+                passwordCheck = false;
+            }
 
+            if(nameCheck && emailCheck && passwordCheck && passwordMatch){
+                createNewUser(fullName,email,password);
+            }
+
+        }else{
+            Toast.makeText(mContext, R.string.nothing_blank, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void createNewUser(String name, String email, String password){
+        UserAuthenticationHelper.createNewUser(email,password);
+        if(UserAuthenticationHelper.checkUserStatus()){
+            RealTimeDatabaseHelper.saveUserEmail(email);
+            RealTimeDatabaseHelper.saveUserName(name);
+            RealTimeDatabaseHelper.saveUserData(name, email);
+            Intent homeIntent = new Intent(getContext(), HomeActivity.class);
+            startActivity(homeIntent);
         }
 
     }

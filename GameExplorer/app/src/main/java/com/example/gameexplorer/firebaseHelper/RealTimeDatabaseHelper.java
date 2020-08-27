@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class DatabaseHelper {
+public class RealTimeDatabaseHelper {
     private static final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private static final String mCurrentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -26,6 +26,14 @@ public class DatabaseHelper {
                 .child(mCurrentUser)
                 .child("userInfo")
                 .child("email address")
+                .setValue(email);
+
+    }
+
+    public static void saveUserData(String name, String email){
+        mDatabase
+                .child("Accounts")
+                .child(name)
                 .setValue(email);
     }
 
