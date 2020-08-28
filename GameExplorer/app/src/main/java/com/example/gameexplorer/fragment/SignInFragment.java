@@ -53,8 +53,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.btn_signIn_si){
-            UserAuthenticationHelper.signOutUser();
-            TextInputEditText et_email = mSignInView.findViewById(R.id.et_email_si);
+             TextInputEditText et_email = mSignInView.findViewById(R.id.et_email_si);
             TextInputEditText et_password = mSignInView.findViewById(R.id.et_password_si);
 
             if(et_email.getText() != null && et_password.getText() != null){
