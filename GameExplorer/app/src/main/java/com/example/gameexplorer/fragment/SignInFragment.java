@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.gameexplorer.R;
+import com.example.gameexplorer.activity.ForgotPasswordActivity;
 import com.example.gameexplorer.activity.HomeActivity;
 import com.example.gameexplorer.firebaseHelper.UserAuthenticationHelper;
 import com.google.android.material.textfield.TextInputEditText;
@@ -42,6 +44,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         if(getView() != null) {
             mSignInView = getView();
             mSignInView.findViewById(R.id.btn_signIn_si).setOnClickListener(this);
+
+            TextView tv_forgotPassword = mSignInView.findViewById(R.id.tv_forgotPassword_si);
+            tv_forgotPassword.setOnClickListener(this);
         }
     }
 
@@ -68,6 +73,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(getContext(), R.string.nothing_blank, Toast.LENGTH_SHORT).show();
                 }
             }
+        } else if(v.getId() == R.id.tv_forgotPassword_si){
+            Intent forgetPasswordIntent = new Intent(getContext(),ForgotPasswordActivity.class);
+            startActivity(forgetPasswordIntent);
         }
     }
 }

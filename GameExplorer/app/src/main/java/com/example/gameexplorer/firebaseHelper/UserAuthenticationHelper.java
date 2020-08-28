@@ -28,6 +28,10 @@ public class UserAuthenticationHelper{
         return currentUser != null;
     }
 
+    public static void sendForgotPassword(String email){
+        mAuth.sendPasswordResetEmail(email);
+    }
+
     //TODO:get Uid DATA
     private void getUserUid(){
     }

@@ -23,6 +23,12 @@
     <string name="less_then_6">pass word is less then 6 please have a password with more then 6 characters</string>
     <string name="welcome_back">Welcome Back!</string>
     <string name="incorrect_email_or_password">Email or password is incorrect</string>
+    <string name="enter_email_address_associated_with_account">Enter Email Address Associated with Account</string>
+    <string name="continue_fp">Continue</string>
+    <string name="email_sent">Email Sent</string>
+    <string name="check_email">Check email to for link to rest password</string>
+    <string name="okay">Ok</string>
+    <string name="forgot_password">Forgot Password</string>
 
 
     <!-- Home Fragment-->

@@ -1,8 +1,13 @@
 package com.example.gameexplorer.firebaseHelper;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class RealTimeDatabaseHelper {
     private static final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -35,6 +40,10 @@ public class RealTimeDatabaseHelper {
                 .child("Accounts")
                 .child(name)
                 .setValue(email);
+    }
+    public static void getEmail(){
+
+
     }
 
     public static void saveCharacter(String name, int id){
