@@ -131,12 +131,13 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
     private void createNewUser(String name, String email, String password){
         UserAuthenticationHelper.createNewUser(email,password);
-        if(UserAuthenticationHelper.checkUserStatus()){
+        if(UserAuthenticationHelper.checkUserStatus() && getActivity() != null){
             RealTimeDatabaseHelper.saveUserEmail(email);
             RealTimeDatabaseHelper.saveUserName(name);
             RealTimeDatabaseHelper.saveUserData(name, email);
             Intent homeIntent = new Intent(getContext(), HomeActivity.class);
             startActivity(homeIntent);
+            getActivity().finish();
         }
 
     }

@@ -17,6 +17,9 @@ import android.view.MenuItem;
 import android.widget.Switch;
 
 import com.example.gameexplorer.R;
+import com.example.gameexplorer.fragment.GamesFragment;
+import com.example.gameexplorer.fragment.HomeFragment;
+import com.example.gameexplorer.networkHelper.NetworkUtils;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomeActivity extends AppCompatActivity {
@@ -25,6 +28,7 @@ public class HomeActivity extends AppCompatActivity {
     private NavigationView mDrawerView;
     private ActionBarDrawerToggle mDrawerToggle;
     private boolean isInFront = false;
+    private boolean isGameFragment = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,16 @@ public class HomeActivity extends AppCompatActivity {
         mDrawerView = findViewById(R.id.drawerView);
 
         setUpDrawerContent(mDrawerView);
+
+
+        if(!isInFront){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Fragment homeFragment = HomeFragment.newInstance();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fl_homeContainer, homeFragment)
+                    .commit();
+        }
     }
 
     @Override
@@ -67,20 +81,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        isInFront = true;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        isInFront = false;
-    }
-    private ActionBarDrawerToggle setupDrawerToggle() {
-        return new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
-    }
-    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
@@ -92,6 +92,12 @@ public class HomeActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+    }
+
 
     private void setUpDrawerContent(NavigationView nv){
         nv.setNavigationItemSelectedListener(
@@ -107,25 +113,35 @@ public class HomeActivity extends AppCompatActivity {
 
     private void selectDrawerItem(MenuItem menuItem){
         Class fragmentClass = null;
-        Fragment fragment = null;
+        String url = null;
         switch(menuItem.getItemId()) {
             case R.id.Home_fragment:
-
+                fragmentClass = HomeFragment.class;
                 break;
             case R.id.allGames_fragment:
-
+                fragmentClass = GamesFragment.class;
+                url = "https://api.rawg.io/api/games";
+                isGameFragment = true;
                 break;
             case R.id.topRated_fragment:
-
+                fragmentClass = GamesFragment.class;
+                url = NetworkUtils.getTopRatedYear();
+                isGameFragment = true;
                 break;
             case R.id.mostPopular_fragment:
-
+                fragmentClass = GamesFragment.class;
+                url =  NetworkUtils.getPopularGames();
+                isGameFragment = true;
                 break;
             case R.id.upcomingReleases_fragment:
-
+                fragmentClass = GamesFragment.class;
+                url =  NetworkUtils.getUpcomingUrl();
+                isGameFragment = true;
                 break;
             case R.id.recentlyReleased_fragment:
-
+                fragmentClass = GamesFragment.class;
+                url =  NetworkUtils.getRecentlyUrl();
+                isGameFragment = true;
                 break;
             case R.id.Platforms_fragment:
 
@@ -149,21 +165,32 @@ public class HomeActivity extends AppCompatActivity {
 
                 break;
         }
-        try {
-             fragment = (Fragment) fragmentClass.newInstance();
-        }catch (Exception e){
-            e.printStackTrace();
+        if(fragmentClass != null) {
+            replaceFragments(fragmentClass,url);
+            menuItem.setChecked(true);
+            setTitle(menuItem.getTitle());
+            mDrawerLayout.close();
         }
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        if(fragment != null){
-            fragmentManager.beginTransaction().replace(R.id.fl_homeContainer,fragment).commit();
-        }
-
-        menuItem.setChecked(true);
-        setTitle(menuItem.getTitle());
-        mDrawerLayout.close();
     }
 
-
+    public void replaceFragments(Class fragmentClass,String url) {
+        Fragment fragment = null;
+        try {
+            if(isGameFragment || url != null){
+                fragment =  GamesFragment.newInstance(url);
+                isGameFragment = false;
+            }
+            else{
+                fragment = (Fragment) fragmentClass.newInstance();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+         if(fragment != null) {
+             fragmentManager.beginTransaction().replace(R.id.fl_homeContainer, fragment)
+                     .commit();
+         }
+    }
 }

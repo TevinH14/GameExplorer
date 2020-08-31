@@ -61,9 +61,10 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 String password = et_password.getText().toString();
                 if(!email.matches("") && !password.matches("")){
                     boolean userStatus = UserAuthenticationHelper.signInUser(email, password);
-                    if (userStatus) {
+                    if (userStatus && getActivity() != null) {
                         Intent intent = new Intent(getContext(), HomeActivity.class);
                         startActivity(intent);
+                        getActivity().finish();
                     } else {
                         Toast.makeText(getContext(), R.string.incorrect_email_or_password,
                                 Toast.LENGTH_LONG).show();
