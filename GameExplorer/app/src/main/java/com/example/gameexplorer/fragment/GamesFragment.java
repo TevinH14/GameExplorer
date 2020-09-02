@@ -57,6 +57,7 @@ public class GamesFragment extends Fragment implements GamesTask.OnGamesFinished
                     startActivity(gameDetailIntent);
                 }
             });
+
             GamesDisplayAdapter ia = new GamesDisplayAdapter(getContext(),games);
             lv_games.setAdapter(ia);
         }

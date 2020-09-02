@@ -12,10 +12,10 @@ import java.util.ArrayList;
 
 public class GamesTask extends AsyncTask<String,Void,ArrayList<Games>> {
 
-    final private OnGamesFinished mOnFinishedInterface;
+    final private OnGamesFinished mOnGameFinishedInterface;
 
     public GamesTask(OnGamesFinished mOnFinishedInterface) {
-        this.mOnFinishedInterface = mOnFinishedInterface;
+        this.mOnGameFinishedInterface = mOnFinishedInterface;
     }
 
     public interface OnGamesFinished{
@@ -50,6 +50,6 @@ public class GamesTask extends AsyncTask<String,Void,ArrayList<Games>> {
 
     @Override
     protected void onPostExecute(ArrayList<Games> games) {
-        mOnFinishedInterface.onGamesPost(games);
+        mOnGameFinishedInterface.onGamesPost(games);
     }
 }
