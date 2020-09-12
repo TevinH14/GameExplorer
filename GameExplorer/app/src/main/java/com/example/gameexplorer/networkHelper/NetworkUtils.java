@@ -16,6 +16,10 @@ import java.util.Locale;
 import java.util.Random;
 
 public class NetworkUtils {
+
+	public static final String MOVIES_END_POINT = "/movies";
+	public static final String SUGGESTED_END_POINT = "/suggested";
+	public static final String SCREENSHOT_END_POINT = "/screenshots";
 	
 	public static boolean isConnected(Context _context) {
 		
@@ -133,5 +137,11 @@ public class NetworkUtils {
 				yearString +
 				"-12-31&ordering=-added";
 
+	}
+
+
+
+	public static String getPageLimit(){
+		return "&page_size=5";
 	}
 }

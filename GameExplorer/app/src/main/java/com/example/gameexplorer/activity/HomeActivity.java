@@ -10,19 +10,24 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Switch;
+import android.widget.ImageView;
 
 import com.example.gameexplorer.R;
+import com.example.gameexplorer.firebaseHelper.UserAuthenticationHelper;
+import com.example.gameexplorer.fragment.FavoriteFragment;
 import com.example.gameexplorer.fragment.GamesFragment;
 import com.example.gameexplorer.fragment.HomeFragment;
 import com.example.gameexplorer.networkHelper.NetworkUtils;
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -37,14 +42,15 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //set up toolbar
-        mToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
+
 
         //replace action bar with toolbar
         if (getSupportActionBar() != null) {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        //set up toolbar
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mDrawerToggle = setupDrawerToggle();
@@ -87,10 +93,9 @@ public class HomeActivity extends AppCompatActivity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        switch(item.getItemId()){
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            mDrawerLayout.openDrawer(GravityCompat.START);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -128,7 +133,7 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.allGames_fragment:
                 fragmentClass = GamesFragment.class;
-                url = "https://api.rawg.io/api/games";
+                url = "https://api.rawg.io/api/games?";
                 isGameFragment = true;
                 break;
             case R.id.topRated_fragment:
@@ -164,13 +169,14 @@ public class HomeActivity extends AppCompatActivity {
 
                 break;
             case R.id.favorite_fragment:
-
+                fragmentClass = FavoriteFragment.class;
+                url = null;
                 break;
             case R.id.settings_fragment:
 
                 break;
             case R.id.signOut_fragment:
-
+                SignOut();
                 break;
         }
         if(fragmentClass != null) {
@@ -200,5 +206,31 @@ public class HomeActivity extends AppCompatActivity {
              fragmentManager.beginTransaction().replace(R.id.fl_homeContainer, fragment)
                      .commit();
          }
+    }
+
+    private void SignOut(){
+        AlertDialog.Builder signOutDialog = new AlertDialog.Builder(this);
+
+        signOutDialog.setTitle("Sign Out");
+        signOutDialog.setMessage("are you sure you want to sign out?");
+        signOutDialog.setNegativeButton("No", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int arg1)
+            {
+                dialog.cancel();
+            }
+        });
+        signOutDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                UserAuthenticationHelper.signOutUser();
+                Intent mainIntent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(mainIntent);
+                finish();
+            }
+        });
+
+
+        signOutDialog.show();
     }
 }

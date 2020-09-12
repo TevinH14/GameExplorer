@@ -74,30 +74,32 @@ public class HomeFragment extends Fragment implements HomeFragmentTask.OnDetailF
 
     @Override
     public void onGamePost(HashMap<Integer, ArrayList<HomeGamesCollection>> _retValues) {
-        mUrls = mHomeTask.getCategoryStringArray();
-        TextView tv_topRatedTitle = getView().findViewById(R.id.tv_topRated_home);
-        String topRatedString = "Top Rated game Of "+ mHomeTask.getYear();
-        tv_topRatedTitle.setText(topRatedString);
+        if(getView() != null) {
+            mUrls = mHomeTask.getCategoryStringArray();
+            TextView tv_topRatedTitle = getView().findViewById(R.id.tv_topRated_home);
+            String topRatedString = "Top Rated game Of " + mHomeTask.getYear();
+            tv_topRatedTitle.setText(topRatedString);
 
-        for (HashMap.Entry<Integer, ArrayList<HomeGamesCollection>> item : _retValues.entrySet()){
-            ViewPager viewPager = getView().findViewById(mViewPagerId[item.getKey()]);
+            for (HashMap.Entry<Integer, ArrayList<HomeGamesCollection>> item : _retValues.entrySet()) {
+                ViewPager viewPager = getView().findViewById(mViewPagerId[item.getKey()]);
 
-            ArrayList<HomeGamesCollection> collection = item.getValue();
+                ArrayList<HomeGamesCollection> collection = item.getValue();
 
-            for (int i = 0; i < collection.size(); i++) {
-                String[] titles = new String[5];
-                String[] images = new String[5];
+                for (int i = 0; i < collection.size(); i++) {
+                    String[] titles = new String[5];
+                    String[] images = new String[5];
 
-                HomeGamesCollection hgc = collection.get(i);
-                ArrayList<String> t = hgc.getGameTitles();
-                ArrayList<String> giu = hgc.getGameImageUrl();
+                    HomeGamesCollection hgc = collection.get(i);
+                    ArrayList<String> t = hgc.getGameTitles();
+                    ArrayList<String> giu = hgc.getGameImageUrl();
 
-                for (int j = 0; j < 5; j++) {
-                    titles[j] = t.get(j);
-                    images[j] = giu.get(j);
+                    for (int j = 0; j < 5; j++) {
+                        titles[j] = t.get(j);
+                        images[j] = giu.get(j);
+                    }
+                    ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getContext(), images, titles);
+                    viewPager.setAdapter(viewPagerAdapter);
                 }
-                ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getContext(),images,titles);
-                viewPager.setAdapter(viewPagerAdapter);
             }
         }
     }

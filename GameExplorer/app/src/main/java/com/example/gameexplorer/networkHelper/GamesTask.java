@@ -14,6 +14,12 @@ public class GamesTask extends AsyncTask<String,Void,ArrayList<Games>> {
 
     final private OnGamesFinished mOnGameFinishedInterface;
 
+    private String mNextUrl;
+
+    public String getNextUrl() {
+        return mNextUrl;
+    }
+
     public GamesTask(OnGamesFinished mOnFinishedInterface) {
         this.mOnGameFinishedInterface = mOnFinishedInterface;
     }
@@ -30,6 +36,7 @@ public class GamesTask extends AsyncTask<String,Void,ArrayList<Games>> {
                 ArrayList<Games> gamesList = new ArrayList<>();
                 try {
                     JSONObject object = new JSONObject(data);
+                    mNextUrl = object.getString("next");
                     JSONArray resultsArray = object.getJSONArray("results");
                     for (int i = 0; i <resultsArray.length() ; i++) {
                         JSONObject obj = resultsArray.getJSONObject(i);

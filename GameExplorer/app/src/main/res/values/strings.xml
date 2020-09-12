@@ -48,9 +48,24 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="view_more"><![CDATA[View More >]]></string>
+    <string name="gd_description">Description</string>
+    <string name="videos">Videos</string>
+    <string name="images">Images</string>
+    <string name="add">add</string>
+    <string name="sort_by">Sort By:</string>
 
 
-    <!-- Home Fragment-->
+
+    <string-array name="sort_array">
+        <item>Normal</item>
+        <item>Name: A to Z</item>
+        <item>Name: Z to A</item>
+        <item>Rating Best to worst</item>
+        <item>Rating Worst to Best</item>
+        <item>Released: Newest</item>
+        <item>Released: Oldest</item>
+    </string-array>
+
 
 
 </resources>

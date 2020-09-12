@@ -15,12 +15,13 @@ public class GameDetailTask extends AsyncTask<String,Void, GameDetail> {
 
     final private OnGamesFinished mOnFinishedInterface;
 
-    public GameDetailTask(OnGamesFinished mOnFinishedInterface) {
-        this.mOnFinishedInterface = mOnFinishedInterface;
-    }
     public interface OnGamesFinished{
         void onGameDetailPost(GameDetail games);
     }
+    public GameDetailTask(OnGamesFinished mOnFinishedInterface) {
+        this.mOnFinishedInterface = mOnFinishedInterface;
+    }
+
     @Override
     protected GameDetail doInBackground(String... strings) {
         if(strings.length > 0) {
@@ -36,7 +37,7 @@ public class GameDetailTask extends AsyncTask<String,Void, GameDetail> {
                     String image = obj.getString("background_image");
                     double uRating = obj.getDouble("rating");
                     String released = obj.getString("released");
-                    String update = obj.getString("update");
+                    String update = obj.getString("updated");
                     String webUrl = obj.getString("website");
                     String redditUrl = obj.getString("reddit_url");
                     String metacriticUrl = obj.getString("metacritic_url");
@@ -51,7 +52,7 @@ public class GameDetailTask extends AsyncTask<String,Void, GameDetail> {
                     String[] genres = new String[genreJsonArray.length()];
                     for (int i = 0; i < genreJsonArray.length() ; i++) {
                         JSONObject objArray = genreJsonArray.getJSONObject(i);
-                        genres[i] = objArray.getString("url");
+                        genres[i] = objArray.getString("name");
                     }
 
                     JSONArray tagJsonArray = obj.getJSONArray("tags");
@@ -78,16 +79,48 @@ public class GameDetailTask extends AsyncTask<String,Void, GameDetail> {
 
                     String esrb = obj.getString("esrb_rating");
 
-                    JSONArray storesJsonArray = obj.getJSONArray("Stores");
+                    JSONArray storesJsonArray = obj.getJSONArray("stores");
                     String[] stores = new String[storesJsonArray.length()];
                     for (int i = 0; i < storesJsonArray.length() ; i++) {
                         JSONObject objArray = storesJsonArray.getJSONObject(i);
-                        stores[i] = objArray.getString("name");
+                        stores[i] = objArray.getString("url");
                     }
 
                     gd = new GameDetail(title,slug,image,mRating,uRating,released,update,webUrl,
                             redditUrl,metacriticUrl,platforms,genres,tags,description,publishers,
                             developers,esrb,stores);
+
+
+                    data = NetworkUtils.getNetworkData(urlString+NetworkUtils
+                            .SCREENSHOT_END_POINT);
+                    JSONObject objScreenShots = new JSONObject(data);
+                    JSONArray imageArrayObj = objScreenShots.getJSONArray("results");
+                    String[] imageArray = new String[imageArrayObj.length()];
+                    for (int i = 0; i <imageArrayObj.length() ; i++) {
+                        JSONObject objArray = imageArrayObj.getJSONObject(i);
+                        imageArray[i] = objArray.getString("image");
+                    }
+                    gd.setScreenShotsUrl(imageArray);
+
+                    data = NetworkUtils.getNetworkData(urlString+NetworkUtils
+                            .MOVIES_END_POINT);
+                    JSONObject objMovie = new JSONObject(data);
+                    JSONArray movieArrayObj = objMovie.getJSONArray("results");
+                    if(movieArrayObj.length() > 0) {
+                        String[] movies = new String[movieArrayObj.length()];
+                        String[] moviePreviews = new String[movieArrayObj.length()];
+                        for (int i = 0; i < movieArrayObj.length(); i++) {
+                            JSONObject objArray = movieArrayObj.getJSONObject(i);
+                            moviePreviews[i] = objArray.getString("preview");
+                            JSONObject dataObj = objArray.getJSONObject("data");
+                            movies[i] = dataObj.getString("480");
+                        }
+                        gd.setVideoUrl(movies);
+                        gd.setMoviesPreviews(moviePreviews);
+                    }
+
+
+
                 }catch (JSONException e){
                     e.printStackTrace();
                 }

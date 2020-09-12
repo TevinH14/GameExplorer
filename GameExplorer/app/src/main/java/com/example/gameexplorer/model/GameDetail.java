@@ -18,6 +18,8 @@ public class GameDetail extends Games {
     private String[] mStores;
 
     private String[] mScreenShotsUrl;
+
+    private String[] mMoviesPreviews;
     private String[] mVideoUrl;
 
     public GameDetail(String mTitle, String mSlugName, String mBackgroundImage, int mCriticRating,
@@ -96,12 +98,20 @@ public class GameDetail extends Games {
     public String[] getVideoUrl() {
         return mVideoUrl;
     }
+    public String[] getMoviesPreviews() {
+        return mMoviesPreviews;
+    }
+
+
 
     //setter
-    public void setmScreenShotsUrl(String[] mScreenShotsUrl) {
+    public void setScreenShotsUrl(String[] mScreenShotsUrl) {
         this.mScreenShotsUrl = mScreenShotsUrl;
     }
-    public void setmVideoUrl(String[] mVideoUrl) {
+    public void setVideoUrl(String[] mVideoUrl) {
         this.mVideoUrl = mVideoUrl;
+    }
+    public void setMoviesPreviews(String[] mMoviesPreviews) {
+        this.mMoviesPreviews = mMoviesPreviews;
     }
 }

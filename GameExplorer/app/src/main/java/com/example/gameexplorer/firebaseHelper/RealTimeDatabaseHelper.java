@@ -1,20 +1,38 @@
 package com.example.gameexplorer.firebaseHelper;
 
-import androidx.annotation.NonNull;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.example.gameexplorer.model.GameDetail;
+import com.example.gameexplorer.model.Games;
+import com.example.gameexplorer.networkHelper.GameDetailTask;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class RealTimeDatabaseHelper {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class RealTimeDatabaseHelper{
     private static final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private static final String mCurrentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+    private static FavoriteFinished mOnFinishedInterface = null;
 
-
+    public interface FavoriteFinished{
+        void onFavoritePost(ArrayList<Games> _gamesList);
+    }
+    public RealTimeDatabaseHelper(FavoriteFinished mOnFinishedInterface) {
+        RealTimeDatabaseHelper.mOnFinishedInterface = mOnFinishedInterface;
+    }
 
     public static void saveUserName(String fullName){
         mDatabase
@@ -41,101 +59,62 @@ public class RealTimeDatabaseHelper {
                 .child(name)
                 .setValue(email);
     }
-    public static void getEmail(){
 
+    public static void saveGame(String name, String image, String slug){
+        final HashMap<String,Object> gameData = new HashMap<>();
+        gameData.put("name",name);
+        gameData.put("slug",slug);
+        gameData.put("image_url",image);
 
-    }
+        DatabaseReference reference = mDatabase.child("users").child(mCurrentUser+"/Favorites");
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                int i = (int) dataSnapshot.getChildrenCount();
+                mDatabase
+                        .child("users")
+                        .child(mCurrentUser)
+                        .child("Favorites")
+                        .child("item" + i)
+                        .setValue(gameData);
+                Log.i("count:"," " + i);
+                loadGame();
+                // ...
+            }
 
-    public static void saveCharacter(String name, int id){
-        mDatabase
-                .child("users")
-                .child(mCurrentUser)
-                .child("favorites")
-                .child("characters")
-                .child(name)
-                .setValue(id);
-    }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-    public void saveComic(String name, String id){
-        mDatabase
-                .child("users")
-                .child(mCurrentUser)
-                .child("wishList")
-                .child("comics")
-                .child(name)
-                .setValue(id);
-    }
-
-    public void saveEvent(String name, String id){
-        mDatabase
-                .child("users")
-                .child(mCurrentUser)
-                .child("favorites")
-                .child("events")
-                .child(name)
-                .setValue(id);
-    }
-
-    public void saveSeries(String name, int id){
-        mDatabase
-                .child("users")
-                .child(mCurrentUser)
-                .child("favorites")
-                .child("series")
-                .child(name)
-                .setValue(id);
-    }
-
-    public void saveCreator(String name, int id){
-        mDatabase
-                .child("users")
-                .child(mCurrentUser)
-                .child("favorites")
-                .child("creators")
-                .child(name)
-                .setValue(id);
-    }
-
-    public void saveStories(String name, int id){
-        mDatabase
-                .child("users")
-                .child(mCurrentUser)
-                .child("favorites")
-                .child("Stories")
-                .child(name)
-                .setValue(id);
-    }
-
-    public void loadUserData(){}
-
-    public void loadCharacter(){
+            }
+        };
+        reference.addListenerForSingleValueEvent(postListener);
 
     }
+    public static void loadGame() {
+        DatabaseReference reference = mDatabase.child("users").child(mCurrentUser+"/Favorites");
+        ValueEventListener postListener = new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Games> gameList = new ArrayList<>();
+                for (DataSnapshot c : dataSnapshot.getChildren()){
 
-    //TODO:LOAD COMIC DATA
-    private void loadComic(){
+                    String name = (String) c.child("name").getValue();
+                    String slug = (String) c.child("slug").getValue();
+                    String imageUrl = (String) c.child("image_url").getValue();
+
+                    gameList.add(new Games(name,slug,imageUrl));
+                }
+                if(gameList.size() > 0) {
+                    mOnFinishedInterface.onFavoritePost(gameList);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        reference.addListenerForSingleValueEvent(postListener);
 
     }
-
-    //TODO:LOAD EVENTS DATA
-    private void loadEvent(){
-
-    }
-
-    //TODO:LOAD SERIES DATA
-    private void loadSeries(){
-
-    }
-
-    //TODO:LOAD CREATORS DATA
-    private void loadCreator(){
-
-    }
-
-    //TODO:LOAD STORIES DATA
-    private void loadStories(){
-
-    }
-
 
 }

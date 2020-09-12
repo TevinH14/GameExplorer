@@ -45,13 +45,13 @@ public class HomeFragmentTask extends AsyncTask<Void, Void, HashMap<Integer, Arr
 	protected HashMap<Integer, ArrayList<HomeGamesCollection>> doInBackground(Void... voids) {
 		// Add member ID to the end of the URL
 		mCategoryStringArray = new String[4];
-		String recentlyReleased = NetworkUtils.getNetworkData(getRecentlyUrl());
+		String recentlyReleased = NetworkUtils.getNetworkData(NetworkUtils.getRecentlyUrl()+NetworkUtils.getPageLimit());
 		mCategoryStringArray[0] = recentlyReleased;
-		String upcomingRelease = NetworkUtils.getNetworkData(getUpcomingUrl());
+		String upcomingRelease = NetworkUtils.getNetworkData(NetworkUtils.getUpcomingUrl()+NetworkUtils.getPageLimit());
 		mCategoryStringArray[1] = upcomingRelease;
-		String mostPopular = NetworkUtils.getNetworkData(getPopularGames());
+		String mostPopular = NetworkUtils.getNetworkData(NetworkUtils.getPopularGames()+NetworkUtils.getPageLimit());
 		mCategoryStringArray[2] = mostPopular;
-		String topRated = NetworkUtils.getNetworkData(getTopRatedYear());
+		String topRated = NetworkUtils.getNetworkData(NetworkUtils.getTopRatedYear()+NetworkUtils.getPageLimit());
 		mCategoryStringArray[3] = topRated;
 
 
@@ -100,61 +100,61 @@ public class HomeFragmentTask extends AsyncTask<Void, Void, HashMap<Integer, Arr
 		mOnFinishedInterface.onGamePost(_result);
 	}
 
-	private String getCurrentDate(){
-		//get today's date
-		return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-	}
-
-	private String getRecentlyUrl(){
-		// get date for a month ago
-		Calendar c1 = Calendar.getInstance();
-		c1.add(Calendar.DAY_OF_YEAR, -30);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-		Date resultDate = c1.getTime();
-		String pastDate = dateFormat.format(resultDate);
-
-		return "https://api.rawg.io/api/games?dates="
-				+pastDate
-				+","
-				+getCurrentDate()
-				+"&ordering=released";
-
-	}
-
-	private String getUpcomingUrl(){Calendar c1 = Calendar.getInstance();
-		c1.add(Calendar.DAY_OF_YEAR, 365);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-		Date resultDate = c1.getTime();
-		String nextYearDate = dateFormat.format(resultDate);
-		return "https://api.rawg.io/api/games?dates=" +
-				getCurrentDate() +
-				"," +
-				nextYearDate +
-				"&ordering=released";
-	}
-
-	private String getTopRatedYear(){
-		final int min = 1995;
-		final int max = 2019;
-		final int randomYear = new Random().nextInt((max - min) + 1) + min;
-		mYear = String.valueOf(randomYear);
-		return  "https://api.rawg.io/api/games?dates=" +
-				randomYear +
-				"-01-01" +
-				"," +
-				randomYear +
-				"-12-31" +
-				"&ordering=-rating";
-	}
-
-	private String getPopularGames(){
-		int yearNum = Calendar.getInstance().get(Calendar.YEAR);
-		String yearString = String.valueOf(yearNum);
-		return "https://api.rawg.io/api/games?dates=" +
-				yearString +
-				"-01-01," +
-				yearString +
-				"-12-31&ordering=-added";
-
-	}
+//	private String getCurrentDate(){
+//		//get today's date
+//		return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+//	}
+//
+//	private String getRecentlyUrl(){
+//		// get date for a month ago
+//		Calendar c1 = Calendar.getInstance();
+//		c1.add(Calendar.DAY_OF_YEAR, -30);
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+//		Date resultDate = c1.getTime();
+//		String pastDate = dateFormat.format(resultDate);
+//
+//		return "https://api.rawg.io/api/games?dates="
+//				+pastDate
+//				+","
+//				+getCurrentDate()
+//				+"&ordering=released";
+//
+//	}
+//
+//	private String getUpcomingUrl(){Calendar c1 = Calendar.getInstance();
+//		c1.add(Calendar.DAY_OF_YEAR, 365);
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+//		Date resultDate = c1.getTime();
+//		String nextYearDate = dateFormat.format(resultDate);
+//		return "https://api.rawg.io/api/games?dates=" +
+//				getCurrentDate() +
+//				"," +
+//				nextYearDate +
+//				"&ordering=released";
+//	}
+//
+//	private String getTopRatedYear(){
+//		final int min = 1995;
+//		final int max = 2019;
+//		final int randomYear = new Random().nextInt((max - min) + 1) + min;
+//		mYear = String.valueOf(randomYear);
+//		return  "https://api.rawg.io/api/games?dates=" +
+//				randomYear +
+//				"-01-01" +
+//				"," +
+//				randomYear +
+//				"-12-31" +
+//				"&ordering=-rating";
+//	}
+//
+//	private String getPopularGames(){
+//		int yearNum = Calendar.getInstance().get(Calendar.YEAR);
+//		String yearString = String.valueOf(yearNum);
+//		return "https://api.rawg.io/api/games?dates=" +
+//				yearString +
+//				"-01-01," +
+//				yearString +
+//				"-12-31&ordering=-added";
+//
+//	}
 }
