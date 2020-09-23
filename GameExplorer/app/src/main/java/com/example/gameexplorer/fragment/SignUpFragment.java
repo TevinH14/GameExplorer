@@ -64,8 +64,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if(v.getId() == R.id.btn_signUp_su){
             userInput();
-        }else if(v.getId() == R.id.btn_back_su){
-
+        }else if(v.getId() == R.id.btn_back_su && getActivity() != null){
+            getActivity().finish();
         }
     }
 

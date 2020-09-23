@@ -1,6 +1,8 @@
 package com.example.gameexplorer.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.gameexplorer.R;
+import com.example.gameexplorer.activity.GameDetailActivity;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -20,11 +23,13 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     private String[] mImageArray;
     private String[] titles;
+    private String[] slugs;
 
-    public ViewPagerAdapter(Context mContext, String[] mImageArray, String[] titles) {
+    public ViewPagerAdapter(Context mContext, String[] mImageArray, String[] titles,String[] slugs) {
         this.mContext = mContext;
         this.mImageArray = mImageArray;
         this.titles = titles;
+        this.slugs =slugs;
     }
 
     @Override
@@ -39,10 +44,20 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.vp_display_layout, null);
+
         ImageView imageView = view.findViewById(R.id.iv_vpCustom);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gameDetailIntent = new Intent(mContext, GameDetailActivity.class);
+                gameDetailIntent.putExtra(GameDetailActivity.GAME_DETAIL_EXTRA,slugs[position]);
+                mContext.startActivity(gameDetailIntent);
+
+            }
+        });
         Picasso
                 .get()
                 .load(mImageArray[position])

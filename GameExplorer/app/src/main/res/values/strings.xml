@@ -53,7 +53,11 @@
     <string name="images">Images</string>
     <string name="add">add</string>
     <string name="sort_by">Sort By:</string>
-
+    <string name="search">Search</string>
+    <string name="searchHint">Search games</string>
+    <string name="game_added">Game have been saved</string>
+    <string name="metacritic">metacritic</string>
+    <string name="more_like_this">More Like This</string>
 
 
     <string-array name="sort_array">
@@ -65,7 +69,6 @@
         <item>Released: Newest</item>
         <item>Released: Oldest</item>
     </string-array>
-
 
 
 </resources>
