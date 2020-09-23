@@ -133,6 +133,16 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         return false;
     }
 
+    @Override
+    public void onBackPressed() {
+        if(getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
     }
@@ -229,7 +239,8 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
          if(fragment != null) {
-             fragmentManager.beginTransaction().replace(R.id.fl_homeContainer, fragment)
+             fragmentManager.beginTransaction().replace(R.id.fl_homeContainer,
+                     fragment).addToBackStack(null)
                      .commit();
          }
     }
