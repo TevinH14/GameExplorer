@@ -106,7 +106,7 @@ public class RealTimeDatabaseHelper{
 
                     gameList.add(new Games(name,slug,imageUrl));
                 }
-                if(gameList.size() > 0) {
+                if(gameList.size() > 0 || gameList != null) {
                     mOnFinishedInterface.onFavoritePost(gameList);
                 }
             }
