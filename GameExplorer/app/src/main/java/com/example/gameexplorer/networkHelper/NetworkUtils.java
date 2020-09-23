@@ -20,7 +20,12 @@ public class NetworkUtils {
 	public static final String MOVIES_END_POINT = "/movies";
 	public static final String SUGGESTED_END_POINT = "/suggested";
 	public static final String SCREENSHOT_END_POINT = "/screenshots";
-	
+	private static String mRandomYear;
+
+	public static String getmRandomYear() {
+		return mRandomYear;
+	}
+
 	public static boolean isConnected(Context _context) {
 		
 		ConnectivityManager mgr = (ConnectivityManager)_context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -98,8 +103,7 @@ public class NetworkUtils {
 		return "https://api.rawg.io/api/games?dates="
 				+pastDate
 				+","
-				+getCurrentDate()
-				+"&ordering=released";
+				+getCurrentDate();
 
 	}
 
@@ -111,21 +115,20 @@ public class NetworkUtils {
 		return "https://api.rawg.io/api/games?dates=" +
 				getCurrentDate() +
 				"," +
-				nextYearDate +
-				"&ordering=released";
+				nextYearDate;
 	}
 
 	public static String getTopRatedYear(){
 		final int min = 1995;
 		final int max = 2019;
 		final int randomYear = new Random().nextInt((max - min) + 1) + min;
+		mRandomYear = String.valueOf(randomYear);
 		return  "https://api.rawg.io/api/games?dates=" +
 				randomYear +
 				"-01-01" +
 				"," +
 				randomYear +
-				"-12-31" +
-				"&ordering=-rating";
+				"-12-31";
 	}
 
 	public static String getPopularGames(){
@@ -135,11 +138,9 @@ public class NetworkUtils {
 				yearString +
 				"-01-01," +
 				yearString +
-				"-12-31&ordering=-added";
+				"-12-31";
 
 	}
-
-
 
 	public static String getPageLimit(){
 		return "&page_size=5";

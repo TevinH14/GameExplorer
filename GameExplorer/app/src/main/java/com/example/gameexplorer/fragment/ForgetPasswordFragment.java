@@ -68,6 +68,9 @@ public class ForgetPasswordFragment extends Fragment implements View.OnClickList
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             UserAuthenticationHelper.sendForgotPassword(email);
+                            if(getActivity() != null){
+                                getActivity().finish();
+                            }
                         }
                     });
 
@@ -81,6 +84,5 @@ public class ForgetPasswordFragment extends Fragment implements View.OnClickList
                 Toast.makeText(getContext(), R.string.blank_email, Toast.LENGTH_LONG).show();
             }
         }
-
     }
 }
