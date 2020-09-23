@@ -10,6 +10,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ public class GamesFragment extends Fragment implements GamesTask.OnGamesFinished
     private boolean mIsLoaded = false;
     private boolean mSorted = false;
     private int preLast;
+    private ProgressBar mProgressBar;
 
 
     public static GamesFragment newInstance(String url) {
@@ -67,6 +69,7 @@ public class GamesFragment extends Fragment implements GamesTask.OnGamesFinished
             spinner.setOnItemSelectedListener(this);
             spinner.setAdapter(adapter);
 
+            mProgressBar = getView().findViewById(R.id.pg_gameIsloading_gd);
 
             ListView lv_games = getView().findViewById(R.id.lv_game_display);
             lv_games.setOnScrollListener(this);
@@ -74,7 +77,10 @@ public class GamesFragment extends Fragment implements GamesTask.OnGamesFinished
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent gameDetailIntent = new Intent(getContext(), GameDetailActivity.class);
-                    gameDetailIntent.putExtra(GameDetailActivity.GAME_DETAIL_EXTRA,mGameList.get(position));
+                    gameDetailIntent.putExtra(GameDetailActivity
+                            .GAME_DETAIL_EXTRA,mGameList
+                            .get(position)
+                            .getSlugName());
                     startActivity(gameDetailIntent);
                 }
             });
@@ -100,6 +106,8 @@ public class GamesFragment extends Fragment implements GamesTask.OnGamesFinished
     private void AddGameData(final ArrayList<Games> games){
         mGameList.addAll(games);
         mGameAdapter.notifyDataSetChanged();
+        mProgressBar.setVisibility(View.GONE);
+
     }
 
 
@@ -117,6 +125,8 @@ public class GamesFragment extends Fragment implements GamesTask.OnGamesFinished
                 if (preLast != lastRow && mIsLoaded) {
                     Log.i("Last", "Last");
                     preLast = lastRow;
+                    mProgressBar.setVisibility(View.VISIBLE);
+
                     networkTask();
                 }
             }
@@ -180,23 +190,19 @@ public class GamesFragment extends Fragment implements GamesTask.OnGamesFinished
     private void networkTask(){
         mGameTask = new GamesTask(this);
         if(!mIsLoaded && !mSorted ) {
-            mGameList.clear();
-            mGameAdapter.notifyDataSetChanged();
             mGameTask.execute(mUrlStart);
-
-
-
         }else if(mSorted && !mIsLoaded){
-            mGameList.clear();
-            mGameAdapter.notifyDataSetChanged();
             mGameTask.execute(mUrlStart + mUrlEnd);
-
         }
 
         if(mIsLoaded){
             mGameTask.execute(mNextUrl);
         }
-
-
+        else {
+            mGameList.clear();
+            mGameAdapter.notifyDataSetChanged();
+            preLast = 0;
+        }
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 }

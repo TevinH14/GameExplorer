@@ -4,8 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/backGroundDark">
 
+
+    <ProgressBar
+        android:id="@+id/pb_homeLoad"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/sv_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
 
     <ScrollView
         android:id="@+id/sv_home"
@@ -28,7 +40,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/recently_released"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 
             <androidx.viewpager.widget.ViewPager
@@ -47,7 +59,8 @@
                 android:layout_below="@+id/vp_recentlyReleased"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="8dp"
-                android:text="@string/view_more" />
+                android:text="@string/view_more"
+                android:textColor="#FFFFFF" />
 
 
             <TextView
@@ -58,7 +71,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/upcoming_releases"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 
             <androidx.viewpager.widget.ViewPager
@@ -77,7 +90,8 @@
                 android:layout_below="@+id/vp_upcomingReleases"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="8dp"
-                android:text="@string/view_more" />
+                android:text="@string/view_more"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -87,7 +101,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/most_popular"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 
             <androidx.viewpager.widget.ViewPager
@@ -106,7 +120,18 @@
                 android:layout_below="@+id/vp_popularReleased"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="8dp"
-                android:text="@string/view_more" />
+                android:text="@string/view_more"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/tv_topRated_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_vm_mostPopular"
+                android:layout_marginTop="8dp"
+                android:text="@string/top_rated"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vp_topRated"
@@ -118,16 +143,6 @@
                 android:layout_marginEnd="8dp" />
 
             <TextView
-                android:id="@+id/tv_topRated_home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_vm_mostPopular"
-                android:layout_marginTop="8dp"
-                android:text="@string/top_rated"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <TextView
                 android:id="@+id/tv_vm_topRated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -135,7 +150,9 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
-                android:text="@string/view_more" />
+                android:text="@string/view_more"
+                android:textColor="#FFFFFF" />
+
         </RelativeLayout>
 
     </ScrollView>
