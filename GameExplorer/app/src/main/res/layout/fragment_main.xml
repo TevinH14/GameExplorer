@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/backGroundDark">
 
     <Button
         android:id="@+id/btn_signUp_main"
@@ -16,7 +16,7 @@
         android:backgroundTint="@color/btnColorPrimary"
         android:text="@string/sign_up"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_signIn_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -31,7 +31,7 @@
         android:backgroundTint="@color/btnColorSecondary"
         android:text="@string/sign_in"
         android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btn_signUp_main"
         app:layout_constraintStart_toStartOf="@+id/btn_signUp_main" />
