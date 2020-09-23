@@ -43,7 +43,7 @@ public class GameDetailAdapter extends RecyclerView.Adapter<GameDetailAdapter.Vi
         Picasso
                 .get()
                 .load(gameUrlList[position])
-                .resize(holder.gameImage.getWidth(),100)
+                .resize(300,holder.gameImage.getHeight())
                 .into(holder.gameImage);
 
         holder.gameImage.setOnClickListener(new View.OnClickListener() {

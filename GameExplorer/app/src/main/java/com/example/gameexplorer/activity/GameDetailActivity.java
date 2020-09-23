@@ -23,14 +23,14 @@ import java.util.Objects;
 public class GameDetailActivity extends AppCompatActivity {
     public static final String GAME_DETAIL_EXTRA = "GAME_DETAIL_EXTRA";
 
-    private Games mGame = null;
+    private String mGame = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_detail);
 
         if(getIntent() != null){
-            mGame = (Games)getIntent().getSerializableExtra(GAME_DETAIL_EXTRA);
+            mGame = getIntent().getStringExtra(GAME_DETAIL_EXTRA);
         }
         Toolbar toolbar = findViewById(R.id.toolbar_gd);
         setSupportActionBar(toolbar);
@@ -54,13 +54,7 @@ public class GameDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menu_add) {
-            RealTimeDatabaseHelper.saveGame(mGame.getTitle(),mGame.getBackgroundImage(),mGame.getSlugName());
-            return true;
-        }else if (item.getItemId() == android.R.id.home ) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return false;
+
     }
 }

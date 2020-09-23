@@ -33,7 +33,10 @@ public class GameDetailTask extends AsyncTask<String,Void, GameDetail> {
                     JSONObject obj = new JSONObject(data);
                     String slug = obj.getString("slug");
                     String title = obj.getString("name");
-                    int mRating = obj.getInt("metacritic");
+                    int mRating = -1;
+                    if(!obj.isNull("metacritic")){
+                        mRating = obj.getInt("metacritic");
+                    }
                     String image = obj.getString("background_image");
                     double uRating = obj.getDouble("rating");
                     String released = obj.getString("released");

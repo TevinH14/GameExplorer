@@ -2,9 +2,11 @@ package com.example.gameexplorer.fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,21 +26,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gameexplorer.R;
 import com.example.gameexplorer.adapter.GameDetailAdapter;
+import com.example.gameexplorer.firebaseHelper.RealTimeDatabaseHelper;
 import com.example.gameexplorer.model.GameDetail;
 import com.example.gameexplorer.model.Games;
 import com.example.gameexplorer.networkHelper.GameDetailTask;
 import com.squareup.picasso.Picasso;
 import android.transition.TransitionManager;
+import android.widget.Toast;
 
 public class GameDetailFragment extends Fragment implements GameDetailTask.OnGamesFinished,
         GameDetailAdapter.OnItemClicked, View.OnClickListener {
 
-    private static Games selectedGame;
+    private static String selectedGame;
     private GameDetail mGame;
     private boolean mIsVideo = false;
 
     // get/set game data to get detail in activity created
-    public static GameDetailFragment newInstance(Games game) {
+    public static GameDetailFragment newInstance(String game) {
         
         Bundle args = new Bundle();
         selectedGame = game;
@@ -50,6 +54,7 @@ public class GameDetailFragment extends Fragment implements GameDetailTask.OnGam
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_game_details,container,false);
     }
 
@@ -57,7 +62,7 @@ public class GameDetailFragment extends Fragment implements GameDetailTask.OnGam
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         GameDetailTask gdt = new GameDetailTask(this);
-        gdt.execute("https://api.rawg.io/api/games/"+selectedGame.getSlugName());
+        gdt.execute("https://api.rawg.io/api/games/"+selectedGame);
 
     }
 
@@ -68,6 +73,25 @@ public class GameDetailFragment extends Fragment implements GameDetailTask.OnGam
             mGame = games;
             TextView tv_title = getView().findViewById(R.id.tv_title_gameDetail);
             tv_title.setText(games.getTitle());
+            TextView tv_metaRating = getView().findViewById(R.id.tv_metRating_gd);
+            int criticRatingNum = games.getCriticRating();
+            if(criticRatingNum != -1){
+                String criticRating = String.valueOf(criticRatingNum);
+                tv_metaRating.setText(criticRating);
+                if(criticRatingNum >= 75){
+                    tv_metaRating.setBackgroundResource(R.color.greenRatingColor);
+
+                }else if(criticRatingNum >= 50){
+                    tv_metaRating.setBackgroundResource(R.color.yellowRatingColor);
+                    tv_metaRating.setTextColor(Color.BLACK);
+                }
+                else {
+                    tv_metaRating.setBackgroundResource(R.color.redRatingColor);
+                }
+            }
+
+            tv_title.setText(games.getTitle());
+
 
             setMainDisplay(-1);
             setUpImageVideoScroll();
@@ -76,6 +100,21 @@ public class GameDetailFragment extends Fragment implements GameDetailTask.OnGam
             btn_description.setOnClickListener(this);
 
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.menu_add) {
+            RealTimeDatabaseHelper.saveGame(mGame.getTitle(),mGame.getBackgroundImage(),mGame.getSlugName());
+            Toast.makeText(getContext(), R.string.game_added,
+                    Toast.LENGTH_LONG).show();
+            return true;
+        }else if (item.getItemId() == android.R.id.home  && getActivity() != null) {
+            getActivity().finish();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -90,8 +129,7 @@ public class GameDetailFragment extends Fragment implements GameDetailTask.OnGam
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.btn_description_dd){
-            if(getView() != null) {
+        if(v.getId() == R.id.btn_description_dd && getView() != null){
             View gdView = getView();
                 CardView cv = gdView.findViewById(R.id.cv_description_gd);
             ConstraintLayout cl = gdView.findViewById(R.id.cl_textBox_gd);
@@ -103,7 +141,6 @@ public class GameDetailFragment extends Fragment implements GameDetailTask.OnGam
                 TransitionManager.beginDelayedTransition(cv,new AutoTransition());
                 tv_description.setText(mGame.getDescription());
                 cl.setVisibility(View.VISIBLE);
-            }
             }
         }
     }
@@ -144,7 +181,7 @@ public class GameDetailFragment extends Fragment implements GameDetailTask.OnGam
                 // setVideoFragment to display
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fl_image_video_container, VideoPlayerFragment
+                        .replace(R.id.fl_gameVideo, VideoPlayerFragment
                                 .newInstance(mGame.getVideoUrl()[pos]))
                         .commit();
 
@@ -182,7 +219,8 @@ public class GameDetailFragment extends Fragment implements GameDetailTask.OnGam
                 videoThumbnailView.setAdapter(thumbnailAdapter);
                 thumbnailAdapter.setOnClick(this);
             }else {
-               videoThumbnailView.setVisibility(View.GONE);
+                getView().findViewById(R.id.tv_video_gd).setVisibility(View.GONE);
+                videoThumbnailView.setVisibility(View.GONE);
             }
         }
     }

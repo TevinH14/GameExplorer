@@ -13,11 +13,14 @@
 
         <ImageView
             android:id="@+id/iv_rv_image"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
+            android:layout_width="167dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
             android:contentDescription="@string/todo"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_launcher_foreground" />
     </RelativeLayout>
 
