@@ -44,6 +44,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         if(getView() != null) {
             mSignInView = getView();
             mSignInView.findViewById(R.id.btn_signIn_si).setOnClickListener(this);
+            mSignInView.findViewById(R.id.btn_back_si).setOnClickListener(this);
 
             TextView tv_forgotPassword = mSignInView.findViewById(R.id.tv_forgotPassword_si);
             tv_forgotPassword.setOnClickListener(this);
@@ -73,9 +74,14 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(getContext(), R.string.nothing_blank, Toast.LENGTH_SHORT).show();
                 }
             }
-        } else if(v.getId() == R.id.tv_forgotPassword_si){
+        }
+        else if(v.getId() == R.id.tv_forgotPassword_si){
             Intent forgetPasswordIntent = new Intent(getContext(),ForgotPasswordActivity.class);
             startActivity(forgetPasswordIntent);
+
+        }
+        else if (v.getId() == R.id.btn_back_si && getActivity() != null){
+            getActivity().finish();
         }
     }
 }
