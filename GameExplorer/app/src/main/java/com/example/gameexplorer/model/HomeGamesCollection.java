@@ -5,15 +5,15 @@ import java.util.ArrayList;
 public class HomeGamesCollection {
     private ArrayList<String> mGameTitles;
     private ArrayList<String> mGameImageUrl;
-    private ArrayList<Integer> mGameIds;
+    private ArrayList<String> mGameSlug;
 
     public HomeGamesCollection(ArrayList<String> gameTitles,
                                ArrayList<String> gameImageUrl,
-                               ArrayList<Integer> gameIds) {
+                               ArrayList<String> gameSlug) {
 
         mGameTitles = gameTitles;
         mGameImageUrl = gameImageUrl;
-        mGameIds = gameIds;
+        mGameSlug = gameSlug;
     }
 
     public ArrayList<String> getGameTitles() {
@@ -32,11 +32,11 @@ public class HomeGamesCollection {
         this.mGameImageUrl = mGameImageUrl;
     }
 
-    public ArrayList<Integer> getGameIds() {
-        return mGameIds;
+    public ArrayList<String> getGameSlug() {
+        return mGameSlug;
     }
 
-    public void setGameIds(ArrayList<Integer> mGameIds) {
-        this.mGameIds = mGameIds;
+    public void setGameIds(ArrayList<String> mGameIds) {
+        this.mGameSlug = mGameIds;
     }
 }
