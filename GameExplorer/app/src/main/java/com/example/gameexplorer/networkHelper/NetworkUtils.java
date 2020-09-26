@@ -145,4 +145,10 @@ public class NetworkUtils {
 	public static String getPageLimit(){
 		return "&page_size=5";
 	}
+
+	public static String getPlatformUrl(){
+		return "https://api.rawg.io/api/platforms";
+	}
+
+
 }

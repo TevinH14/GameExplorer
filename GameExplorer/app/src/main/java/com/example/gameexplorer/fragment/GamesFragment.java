@@ -88,8 +88,6 @@ public class GamesFragment extends Fragment implements GamesTask.OnGamesFinished
             //set listView adapter
             mGameAdapter = new GamesDisplayAdapter(getContext(),mGameList);
             lv_games.setAdapter(mGameAdapter);
-
-
         }
     }
 
@@ -112,10 +110,6 @@ public class GamesFragment extends Fragment implements GamesTask.OnGamesFinished
 
 
 
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-    }
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -183,10 +177,6 @@ public class GamesFragment extends Fragment implements GamesTask.OnGamesFinished
 
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
     private void networkTask(){
         mGameTask = new GamesTask(this);
         if(!mIsLoaded && !mSorted ) {
@@ -205,4 +195,15 @@ public class GamesFragment extends Fragment implements GamesTask.OnGamesFinished
         }
         mProgressBar.setVisibility(View.VISIBLE);
     }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
 }

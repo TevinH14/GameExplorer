@@ -28,6 +28,7 @@ import com.example.gameexplorer.firebaseHelper.UserAuthenticationHelper;
 import com.example.gameexplorer.fragment.FavoriteFragment;
 import com.example.gameexplorer.fragment.GamesFragment;
 import com.example.gameexplorer.fragment.HomeFragment;
+import com.example.gameexplorer.fragment.PlatformFragment;
 import com.example.gameexplorer.networkHelper.NetworkUtils;
 import com.google.android.material.navigation.NavigationView;
 
@@ -193,7 +194,9 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                 isGameFragment = true;
                 break;
             case R.id.Platforms_fragment:
-
+                fragmentClass = PlatformFragment.class;
+                url = null;
+                isGameFragment = false;
                 break;
             case R.id.publishers_fragment:
 
