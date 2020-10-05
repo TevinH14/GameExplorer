@@ -6,9 +6,9 @@ public class GamePlatform implements Serializable {
     private int mId;
     private String mName;
     private String mImageUrl;
-    private String mGameSlug[];
+    private String[] mGameSlug;
     private String mDescription;
-    private Games mGames[];
+    private Games[] mGames;
 
     public GamePlatform(int mId, String mName, String mImageUrl, String[] mGameSlug) {
         this.mId = mId;

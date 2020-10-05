@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.gameexplorer.R;
-import com.example.gameexplorer.activity.HomeActivity;
 import com.example.gameexplorer.activity.UserImageActivity;
 import com.example.gameexplorer.firebaseHelper.RealTimeDatabaseHelper;
 import com.example.gameexplorer.firebaseHelper.UserAuthenticationHelper;

@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.gameexplorer.R;
-import com.example.gameexplorer.activity.CreatorDetailActivity;
 import com.example.gameexplorer.activity.DeveloperDetailActivity;
 import com.example.gameexplorer.adapter.ViewPagerAdapter;
 import com.example.gameexplorer.model.Developer;

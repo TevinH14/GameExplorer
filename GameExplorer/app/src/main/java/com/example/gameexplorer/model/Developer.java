@@ -6,8 +6,8 @@ public class Developer implements Serializable {
     private int mId;
     private String mName;
     private String mImageUrl;
-    private String mGameSlug[];
-    private Games mGames[];
+    private String[] mGameSlug;
+    private Games[] mGames;
 
     public Developer(int mId, String mName, String mImageUrl, String[] mGameSlug) {
         this.mId = mId;

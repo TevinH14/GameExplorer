@@ -3,7 +3,6 @@ package com.example.gameexplorer.networkHelper.developerTasks;
 import android.os.AsyncTask;
 
 import com.example.gameexplorer.model.Developer;
-import com.example.gameexplorer.model.Publisher;
 import com.example.gameexplorer.networkHelper.NetworkUtils;
 
 import org.json.JSONArray;

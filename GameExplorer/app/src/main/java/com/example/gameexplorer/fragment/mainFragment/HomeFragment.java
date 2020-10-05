@@ -30,7 +30,6 @@ public class HomeFragment extends Fragment implements HomeFragmentTask.OnDetailF
                     R.id.vp_popularReleased,
                     R.id.vp_topRated};
 
-    private String[] mUrls;
     private HomeFragmentTask mHomeTask;
     private ProgressBar mProgressbar;
     public static HomeFragment newInstance() {
@@ -77,7 +76,7 @@ public class HomeFragment extends Fragment implements HomeFragmentTask.OnDetailF
     @Override
     public void onGamePost(HashMap<Integer, ArrayList<HomeGamesCollection>> _retValues) {
         if(getView() != null) {
-            mUrls = mHomeTask.getCategoryStringArray();
+            String[] mUrls = mHomeTask.getCategoryStringArray();
             TextView tv_topRatedTitle = getView().findViewById(R.id.tv_topRated_home);
             String topRatedString = "Top Rated game Of " + NetworkUtils.getmRandomYear();
             tv_topRatedTitle.setText(topRatedString);

@@ -16,7 +16,6 @@
     <color name="redRatingColor">#B90000</color>
 
     <!-- text color -->
-    <color name="whiteTextColor"></color>
-    <color name="blackTextColor"></color>
+    <color name="whiteTextColor">#ffff</color>
 
 </resources>

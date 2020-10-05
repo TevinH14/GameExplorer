@@ -10,11 +10,8 @@ import android.os.Bundle;
 import com.example.gameexplorer.R;
 import com.example.gameexplorer.fragment.creatorFragments.CreatorDetailFragment;
 import com.example.gameexplorer.fragment.gamesFragment.GamesFragment;
-import com.example.gameexplorer.fragment.platformFragment.PlatformDetailFragment;
 import com.example.gameexplorer.model.Creator;
-import com.example.gameexplorer.model.GamePlatform;
 import com.example.gameexplorer.networkHelper.creatorTask.CreatorDetailTask;
-import com.example.gameexplorer.networkHelper.platformTasks.PlatformDetailTask;
 
 public class CreatorDetailActivity extends AppCompatActivity implements CreatorDetailTask.OnCreatorFinished {
     public static final String CREATOR_DETAIL_EXTRA = "CREATOR_DETAIL_EXTRA";

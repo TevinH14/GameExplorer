@@ -1,7 +1,5 @@
 package com.example.gameexplorer.firebaseHelper;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.example.gameexplorer.model.Games;

@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 
 import com.example.gameexplorer.R;
-import com.example.gameexplorer.fragment.gamesFragment.GameDetailFragment;
 import com.example.gameexplorer.fragment.settingFragment.ImageFragment;
 import com.example.gameexplorer.fragment.userAuthFragments.SignUpFragment;
 

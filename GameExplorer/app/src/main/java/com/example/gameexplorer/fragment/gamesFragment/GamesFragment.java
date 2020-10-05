@@ -89,8 +89,7 @@ public class GamesFragment extends Fragment implements GamesTask.OnGamesFinished
                     Intent gameDetailIntent = new Intent(getContext(), GameDetailActivity.class);
                     gameDetailIntent.putExtra(GameDetailActivity
                             .GAME_DETAIL_EXTRA,mGameList
-                            .get(position)
-                            .getSlugName());
+                            .get(position).getSlugName());
                     startActivity(gameDetailIntent);
                 }
             });
@@ -182,9 +181,6 @@ public class GamesFragment extends Fragment implements GamesTask.OnGamesFinished
 
                 default:
                     throw new IllegalStateException("Unexpected value: " + position);
-            }
-            if(position > 0){
-                mIsLoaded = false;
             }
         networkTask();
 

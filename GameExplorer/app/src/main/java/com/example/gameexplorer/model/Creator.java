@@ -8,8 +8,8 @@ public class Creator implements Serializable {
     private String mCreatorImage;
     private String mImageUrl;
     private int mGameCount;
-    private String mGameSlug[];
-    private Games mGames[];
+    private String[] mGameSlug;
+    private Games[] mGames;
     private String mDescription;
 
     public Creator(int mId, String mName, String mCreatorImage, String mImageUrl, int mGameCount, String[] mGameSlug) {

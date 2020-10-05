@@ -27,14 +27,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.gameexplorer.R;
 import com.example.gameexplorer.activity.GameDetailActivity;
-import com.example.gameexplorer.activity.PlatformDetailActivity;
 import com.example.gameexplorer.adapter.ViewPagerAdapter;
 import com.example.gameexplorer.adapter.gameAdapters.GameDetailAdapter;
 import com.example.gameexplorer.firebaseHelper.RealTimeDatabaseHelper;
 import com.example.gameexplorer.fragment.BackgroundImageFragment;
 import com.example.gameexplorer.fragment.VideoPlayerFragment;
 import com.example.gameexplorer.model.GameDetail;
-import com.example.gameexplorer.networkHelper.NetworkUtils;
 import com.squareup.picasso.Picasso;
 import android.transition.TransitionManager;
 import android.widget.Toast;

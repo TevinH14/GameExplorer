@@ -4,9 +4,7 @@ import android.os.AsyncTask;
 
 import com.example.gameexplorer.model.Developer;
 import com.example.gameexplorer.model.Games;
-import com.example.gameexplorer.model.Publisher;
 import com.example.gameexplorer.networkHelper.NetworkUtils;
-import com.example.gameexplorer.networkHelper.publisherTasks.PublisherDetailTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;

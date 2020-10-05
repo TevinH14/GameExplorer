@@ -49,7 +49,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     private Toolbar mToolbar;
     private NavigationView mDrawerView;
     private ActionBarDrawerToggle mDrawerToggle;
-    private boolean isInFront = false;
+    boolean isInFront = false;
     private boolean isGameFragment = false;
 
     @Override
@@ -78,11 +78,14 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
 
         setUpDrawerContent(mDrawerView);
 
-        new FirebaseStorageHelper(this);
-        FirebaseStorageHelper.downloadImage();
 
         new RealTimeDatabaseHelper(this);
         RealTimeDatabaseHelper.loadName();
+
+        new FirebaseStorageHelper(this);
+        FirebaseStorageHelper.downloadImage();
+
+
 
         if(!isInFront){
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -162,6 +165,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public void onGotImage(Bitmap bitmap) {
         setUpHeaderImage(mDrawerView, bitmap);
+
     }
 
     @Override

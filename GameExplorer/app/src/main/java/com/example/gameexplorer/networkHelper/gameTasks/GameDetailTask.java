@@ -10,8 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class GameDetailTask extends AsyncTask<String,Void, GameDetail> {
 
     final private OnGamesFinished mOnFinishedInterface;
@@ -131,7 +129,7 @@ public class GameDetailTask extends AsyncTask<String,Void, GameDetail> {
                             .SERIES_END_POINT);
                     JSONObject objectGames = new JSONObject(data);
                     JSONArray resultsArray = objectGames.getJSONArray("results");
-                    int length = 5;
+                    int length ;
                     if (resultsArray.length() < 5){
                         length = resultsArray.length();
                     }
@@ -153,7 +151,6 @@ public class GameDetailTask extends AsyncTask<String,Void, GameDetail> {
                             .SUGGESTED_END_POINT);
                     JSONObject objectMore = new JSONObject(data);
                     JSONArray resultsMore = objectMore.getJSONArray("results");
-                     length = 5;
                     if (resultsMore.length() < 5){
                         length = resultsMore.length();
                     }

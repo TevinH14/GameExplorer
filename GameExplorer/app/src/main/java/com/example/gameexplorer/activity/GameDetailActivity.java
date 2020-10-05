@@ -9,22 +9,23 @@ import com.example.gameexplorer.R;
 import com.example.gameexplorer.firebaseHelper.RealTimeDatabaseHelper;
 import com.example.gameexplorer.fragment.gamesFragment.GameDetailFragment;
 import com.example.gameexplorer.model.GameDetail;
+import com.example.gameexplorer.model.Games;
 import com.example.gameexplorer.networkHelper.gameTasks.GameDetailTask;
 
 public class GameDetailActivity extends AppCompatActivity implements GameDetailTask.OnGamesFinished,
 RealTimeDatabaseHelper.GameExistFinished{
     public static final String GAME_DETAIL_EXTRA = "GAME_DETAIL_EXTRA";
 
-    private String mSlug = null;
-    private GameDetail mGame;
+       private GameDetail mGameDetail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_detail);
-
+        String slug = "";
         if(getIntent() != null){
-            mSlug = getIntent().getStringExtra(GAME_DETAIL_EXTRA);
+            slug = getIntent().getStringExtra(GAME_DETAIL_EXTRA);
         }
+
         Toolbar toolbar = findViewById(R.id.toolbar_gd);
         setSupportActionBar(toolbar);
 
@@ -33,7 +34,7 @@ RealTimeDatabaseHelper.GameExistFinished{
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         GameDetailTask gdt = new GameDetailTask(this);
-        gdt.execute("https://api.rawg.io/api/games/"+mSlug);
+        gdt.execute("https://api.rawg.io/api/games/"+slug);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -50,9 +51,9 @@ RealTimeDatabaseHelper.GameExistFinished{
 
     @Override
     public void onGameDetailPost(GameDetail games) {
-        mGame = games;
+        mGameDetail = games;
         new RealTimeDatabaseHelper(this);
-        RealTimeDatabaseHelper.checkIfGameExist(mGame.getGameId());
+        RealTimeDatabaseHelper.checkIfGameExist(mGameDetail.getGameId());
     }
 
     @Override
@@ -60,11 +61,11 @@ RealTimeDatabaseHelper.GameExistFinished{
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fl_gameDetail, GameDetailFragment.newInstance(mGame,hasGame))
+                .replace(R.id.fl_gameDetail, GameDetailFragment.newInstance(mGameDetail,hasGame))
                 .commit();
     }
 
     public void replaceFragments() {
-        RealTimeDatabaseHelper.checkIfGameExist(mGame.getGameId());
+        RealTimeDatabaseHelper.checkIfGameExist(mGameDetail.getGameId());
     }
 }

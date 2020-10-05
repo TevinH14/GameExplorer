@@ -3,9 +3,7 @@ package com.example.gameexplorer.networkHelper.creatorTask;
 import android.os.AsyncTask;
 
 import com.example.gameexplorer.model.Creator;
-import com.example.gameexplorer.model.GamePlatform;
 import com.example.gameexplorer.networkHelper.NetworkUtils;
-import com.example.gameexplorer.networkHelper.platformTasks.PlatformTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;

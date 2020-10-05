@@ -36,17 +36,18 @@
         app:layout_constraintEnd_toEndOf="@+id/btn_signUp_main"
         app:layout_constraintStart_toStartOf="@+id/btn_signUp_main" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="262dp"
-        android:layout_height="309dp"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="140dp"
-        android:layout_marginEnd="139dp"
-        android:contentDescription="@string/todo"
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="284dp"
+        android:layout_marginEnd="34dp"
+        android:text="@string/app_name"
+        android:textColor="@color/btnColorPrimary"
+        android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/game_explorer_logo" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

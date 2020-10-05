@@ -56,7 +56,8 @@ public class FavoriteFragment extends Fragment implements RealTimeDatabaseHelper
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent gameDetailIntent = new Intent(getContext(), GameDetailActivity.class);
-                    gameDetailIntent.putExtra(GameDetailActivity.GAME_DETAIL_EXTRA, _gamesList.get(position));
+                    gameDetailIntent.putExtra(GameDetailActivity.GAME_DETAIL_EXTRA, _gamesList
+                            .get(position).getSlugName());
                     startActivity(gameDetailIntent);
                 }
             });
