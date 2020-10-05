@@ -32,8 +32,12 @@ public class UserAuthenticationHelper{
         mAuth.sendPasswordResetEmail(email);
     }
 
-    //TODO:get Uid DATA
-    private void getUserUid(){
+
+    public static String getUserUid(){
+        if(mAuth.getCurrentUser() != null) {
+            return mAuth.getCurrentUser().getUid();
+        }
+        return null;
     }
 
     public static String verifyUserEmail(String email_one,String email_two){

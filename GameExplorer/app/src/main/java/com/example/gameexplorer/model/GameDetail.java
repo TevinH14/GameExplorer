@@ -1,6 +1,7 @@
 package com.example.gameexplorer.model;
 
 public class GameDetail extends Games {
+    private int mGameId;
     private int mCriticRating;
     private double mUserRating;
     private String mReleased;
@@ -21,6 +22,9 @@ public class GameDetail extends Games {
 
     private String[] mMoviesPreviews;
     private String[] mVideoUrl;
+
+    private Games[] mSeriesGames;
+    private Games[] mMoreGames;
 
     public GameDetail(String mTitle, String mSlugName, String mBackgroundImage, int mCriticRating,
                       double mUserRating, String mReleased, String mUpdate, String mWebsiteUrl,
@@ -102,7 +106,29 @@ public class GameDetail extends Games {
         return mMoviesPreviews;
     }
 
+    public Games[] getSeriesGames() {
+        return mSeriesGames;
+    }
 
+    public void setSeriesGames(Games[] mSeriesGames) {
+        this.mSeriesGames = mSeriesGames;
+    }
+
+    public Games[] getMoreGames() {
+        return mMoreGames;
+    }
+
+    public void setMoreGames(Games[] mMoreGames) {
+        this.mMoreGames = mMoreGames;
+    }
+
+    public int getGameId() {
+        return mGameId;
+    }
+
+    public void setGameId(int mGameId) {
+        this.mGameId = mGameId;
+    }
 
     //setter
     public void setScreenShotsUrl(String[] mScreenShotsUrl) {

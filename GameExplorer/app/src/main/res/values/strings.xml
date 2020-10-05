@@ -58,6 +58,15 @@
     <string name="game_added">Game have been saved</string>
     <string name="metacritic">metacritic</string>
     <string name="more_like_this">More Like This</string>
+    <string name="games_on_this_platforms">Games on this platforms</string>
+    <string name="game_count">Game Count:</string>
+    <string name="delete">delete</string>
+    <string name="upload">Upload</string>
+    <string name="select_an_image">Select an image</string>
+    <string name="skip">Skip</string>
+    <string name="done">Done</string>
+    <string name="user">user</string>
+    <string name="games_in_the_same_series">Games in the same Series</string>
 
 
     <string-array name="sort_array">

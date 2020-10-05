@@ -2,13 +2,12 @@ package com.example.gameexplorer.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.gameexplorer.R;
 import com.example.gameexplorer.firebaseHelper.UserAuthenticationHelper;
-import com.example.gameexplorer.fragment.MainFragment;
+import com.example.gameexplorer.fragment.mainFragment.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
 

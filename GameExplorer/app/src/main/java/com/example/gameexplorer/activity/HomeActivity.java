@@ -18,21 +18,33 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.gameexplorer.R;
+import com.example.gameexplorer.firebaseHelper.FirebaseStorageHelper;
+import com.example.gameexplorer.firebaseHelper.RealTimeDatabaseHelper;
 import com.example.gameexplorer.firebaseHelper.UserAuthenticationHelper;
-import com.example.gameexplorer.fragment.FavoriteFragment;
-import com.example.gameexplorer.fragment.GamesFragment;
-import com.example.gameexplorer.fragment.HomeFragment;
-import com.example.gameexplorer.fragment.PlatformFragment;
+import com.example.gameexplorer.fragment.creatorFragments.CreatorFragment;
+import com.example.gameexplorer.fragment.developerFragments.DevelopersFragment;
+import com.example.gameexplorer.fragment.gamesFragment.FavoriteFragment;
+import com.example.gameexplorer.fragment.gamesFragment.GamesFragment;
+import com.example.gameexplorer.fragment.mainFragment.HomeFragment;
+import com.example.gameexplorer.fragment.platformFragment.PlatformFragment;
+import com.example.gameexplorer.fragment.publisherFragments.PublishersFragment;
+import com.example.gameexplorer.fragment.settingFragment.SettingsFragment;
 import com.example.gameexplorer.networkHelper.NetworkUtils;
 import com.google.android.material.navigation.NavigationView;
 
-public class HomeActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class HomeActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
+        FirebaseStorageHelper.UserImageFinisher, RealTimeDatabaseHelper.NameFinished {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
     private NavigationView mDrawerView;
@@ -44,8 +56,6 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-
 
         //replace action bar with toolbar
         if (getSupportActionBar() != null) {
@@ -68,6 +78,11 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
 
         setUpDrawerContent(mDrawerView);
 
+        new FirebaseStorageHelper(this);
+        FirebaseStorageHelper.downloadImage();
+
+        new RealTimeDatabaseHelper(this);
+        RealTimeDatabaseHelper.loadName();
 
         if(!isInFront){
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -144,10 +159,19 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
+    @Override
+    public void onGotImage(Bitmap bitmap) {
+        setUpHeaderImage(mDrawerView, bitmap);
+    }
+
+    @Override
+    public void OnNamePost(String _name) {
+        setUpHeaderName(mDrawerView ,_name);
+    }
+
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
     }
-
 
     private void setUpDrawerContent(NavigationView nv){
         nv.setNavigationItemSelectedListener(
@@ -159,6 +183,26 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                     }
                 }
         );
+    }
+
+    private void setUpHeaderImage(NavigationView nv, Bitmap bitmap){
+        View headerView = nv.getHeaderView(0);
+        CircleImageView civ = headerView.findViewById(R.id.iv_userImage_header);
+        if(bitmap != null) {
+            civ.setImageBitmap(bitmap);
+        }else {
+            civ.setImageResource(R.drawable.person_placeholder);
+        }
+    }
+
+    private void setUpHeaderName(NavigationView nv, String name){
+        View headerView = nv.getHeaderView(0);
+        TextView tv_name = headerView.findViewById(R.id.tv_userName_header);
+        if(name != null) {
+            tv_name.setText(name);
+        }else {
+            tv_name.setText(R.string.user);
+        }
     }
 
     private void selectDrawerItem(MenuItem menuItem){
@@ -199,20 +243,24 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                 isGameFragment = false;
                 break;
             case R.id.publishers_fragment:
-
+                fragmentClass = PublishersFragment.class;
+                url = null;
                 break;
             case R.id.developers_fragment:
-
+                fragmentClass = DevelopersFragment.class;
+                url = null;
                 break;
             case R.id.creators_fragment:
-
+                fragmentClass = CreatorFragment.class;
+                url = null;
                 break;
             case R.id.favorite_fragment:
                 fragmentClass = FavoriteFragment.class;
                 url = null;
                 break;
             case R.id.settings_fragment:
-
+                fragmentClass = SettingsFragment.class;
+                url = null;
                 break;
             case R.id.signOut_fragment:
                 SignOut();

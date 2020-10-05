@@ -3,35 +3,47 @@ package com.example.gameexplorer.firebaseHelper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.example.gameexplorer.model.GameDetail;
 import com.example.gameexplorer.model.Games;
-import com.example.gameexplorer.networkHelper.GameDetailTask;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class RealTimeDatabaseHelper{
     private static final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private static final String mCurrentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private static final FirebaseStorage mStorage = FirebaseStorage.getInstance();
 
-    private static FavoriteFinished mOnFinishedInterface = null;
+    private static FavoriteFinished mOnFavoriteFinished = null;
+    private static GameExistFinished mOnExistFinished = null;
+    private static NameFinished mOnNameFinished = null;
 
     public interface FavoriteFinished{
         void onFavoritePost(ArrayList<Games> _gamesList);
     }
-    public RealTimeDatabaseHelper(FavoriteFinished mOnFinishedInterface) {
-        RealTimeDatabaseHelper.mOnFinishedInterface = mOnFinishedInterface;
+    public interface GameExistFinished{
+        void onExistPost(boolean hasGame);
+    }
+    public interface NameFinished{
+        void OnNamePost(String _name);
+    }
+
+    //method overloading interfaces
+    public RealTimeDatabaseHelper(GameExistFinished mOnExistFinished) {
+        RealTimeDatabaseHelper.mOnExistFinished = mOnExistFinished;
+    }
+    public RealTimeDatabaseHelper(FavoriteFinished mOnFavoriteFinished) {
+        RealTimeDatabaseHelper.mOnFavoriteFinished = mOnFavoriteFinished;
+    }
+    public RealTimeDatabaseHelper(NameFinished mOnNameFinished){
+        RealTimeDatabaseHelper.mOnNameFinished = mOnNameFinished;
     }
 
     public static void saveUserName(String fullName){
@@ -60,37 +72,22 @@ public class RealTimeDatabaseHelper{
                 .setValue(email);
     }
 
-    public static void saveGame(String name, String image, String slug){
+    public static void saveGame(String name, String image, String slug,int id){
+        String idString = String.valueOf(id);
+
         final HashMap<String,Object> gameData = new HashMap<>();
         gameData.put("name",name);
         gameData.put("slug",slug);
         gameData.put("image_url",image);
 
-        DatabaseReference reference = mDatabase.child("users").child(mCurrentUser+"/Favorites");
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                int i = (int) dataSnapshot.getChildrenCount();
-                mDatabase
-                        .child("users")
-                        .child(mCurrentUser)
-                        .child("Favorites")
-                        .child("item" + i)
-                        .setValue(gameData);
-                Log.i("count:"," " + i);
-                loadGame();
-                // ...
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-        reference.addListenerForSingleValueEvent(postListener);
-
+        mDatabase
+                .child("users")
+                .child(mCurrentUser)
+                .child("Favorites")
+                .child(idString)
+                .setValue(gameData);
     }
+
     public static void loadGame() {
         DatabaseReference reference = mDatabase.child("users").child(mCurrentUser+"/Favorites");
         ValueEventListener postListener = new ValueEventListener()
@@ -106,15 +103,62 @@ public class RealTimeDatabaseHelper{
 
                     gameList.add(new Games(name,slug,imageUrl));
                 }
-                if(gameList.size() > 0 || gameList != null) {
-                    mOnFinishedInterface.onFavoritePost(gameList);
+                if(gameList != null) {
+                    mOnFavoriteFinished.onFavoritePost(gameList);
                 }
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         };
         reference.addListenerForSingleValueEvent(postListener);
 
+    }
+
+    public static void loadName(){
+        DatabaseReference reference = mDatabase
+                .child("users")
+                .child(mCurrentUser)
+                .child("/userInfo")
+                .child("name");
+        ValueEventListener postListener = new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String name =  dataSnapshot.getValue(String.class);
+                mOnNameFinished.OnNamePost(name);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        };
+        reference.addListenerForSingleValueEvent(postListener);
+    }
+
+    public static void removeGame(int id){
+        String idString = String.valueOf(id);
+        mDatabase
+                .child("users")
+                .child(mCurrentUser)
+                .child("Favorites")
+                .child(idString).removeValue();
+    }
+
+    public static void checkIfGameExist(final int id){
+        DatabaseReference reference = mDatabase.child("users").child(mCurrentUser+"/Favorites");
+        ValueEventListener postListener = new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                String idString = String.valueOf(id);
+                boolean doesExist = false;
+                if (snapshot.hasChild(idString)) {
+                    doesExist = true;
+                }
+                mOnExistFinished.onExistPost(doesExist);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        };
+        reference.addListenerForSingleValueEvent(postListener);
     }
 
 }

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.gameexplorer.R;
-import com.example.gameexplorer.fragment.ForgetPasswordFragment;
+import com.example.gameexplorer.fragment.userAuthFragments.ForgetPasswordFragment;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 

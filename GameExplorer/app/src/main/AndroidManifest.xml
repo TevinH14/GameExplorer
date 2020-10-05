@@ -13,32 +13,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SearchableActivity"
+        <activity android:name=".activity.UserImageActivity"></activity>
+        <activity android:name=".activity.CreatorDetailActivity" />
+        <activity android:name=".activity.DeveloperDetailActivity" />
+        <activity android:name=".activity.PublishersDetailActivity" />
+        <activity android:name=".activity.PlatformDetailActivity" />
+        <activity
+            android:name=".activity.SearchableActivity"
             android:launchMode="singleTop">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH"/>
+                <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".activity.GameDetailActivity" />
-
         <activity android:name=".activity.ForgotPasswordActivity" />
-
         <activity android:name=".activity.SignInActivity" />
-
         <activity android:name=".activity.HomeActivity">
             <meta-data
                 android:name="android.app.default.searchable"
-                android:value=".activity.SearchableActivity"/>
+                android:value=".activity.SearchableActivity" />
         </activity>
-
         <activity android:name=".activity.SignUpActivity" />
-
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

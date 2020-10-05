@@ -10,8 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.gameexplorer.R;
-import com.example.gameexplorer.firebaseHelper.RealTimeDatabaseHelper;
-import com.example.gameexplorer.fragment.GamesFragment;
+import com.example.gameexplorer.fragment.gamesFragment.GamesFragment;
 
 public class SearchableActivity extends AppCompatActivity {
 

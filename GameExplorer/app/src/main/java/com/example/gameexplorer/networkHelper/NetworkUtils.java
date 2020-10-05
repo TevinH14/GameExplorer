@@ -20,6 +20,9 @@ public class NetworkUtils {
 	public static final String MOVIES_END_POINT = "/movies";
 	public static final String SUGGESTED_END_POINT = "/suggested";
 	public static final String SCREENSHOT_END_POINT = "/screenshots";
+	public static final String SERIES_END_POINT = "/game-series";
+
+
 	private static String mRandomYear;
 
 	public static String getmRandomYear() {
@@ -146,8 +149,24 @@ public class NetworkUtils {
 		return "&page_size=5";
 	}
 
+	public static String getGameUrl(){
+		return "https://api.rawg.io/api/games";
+	}
+
 	public static String getPlatformUrl(){
 		return "https://api.rawg.io/api/platforms";
+	}
+
+	public static String getPublishersUrl(){
+		return "https://api.rawg.io/api/publishers";
+	}
+
+	public static String getDevelopersUrl(){
+		return "https://api.rawg.io/api/developers";
+	}
+
+	public static String getCreatorsUrl(){
+		return "https://api.rawg.io/api/creators";
 	}
 
 

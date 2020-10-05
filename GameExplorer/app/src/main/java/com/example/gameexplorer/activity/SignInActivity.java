@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.gameexplorer.R;
-import com.example.gameexplorer.fragment.SignInFragment;
+import com.example.gameexplorer.fragment.userAuthFragments.SignInFragment;
 
 public class SignInActivity extends AppCompatActivity {
 

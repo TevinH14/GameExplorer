@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_userImage_ui"
+        android:layout_width="212dp"
+        android:layout_height="205dp"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="90dp"
+        android:contentDescription="@string/todo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/btn_select_ui"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/select_an_image"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/iv_userImage_ui"
+        app:layout_constraintStart_toStartOf="@+id/iv_userImage_ui"
+        app:layout_constraintTop_toBottomOf="@+id/iv_userImage_ui" />
+
+    <Button
+        android:id="@+id/btn_continue_ui"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/btnColorPrimary"
+        android:text="@string/continue_fp"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_skip_ui"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_skip_ui"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/btnColorSecondary"
+        android:text="@string/skip"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btn_continue_ui"
+        app:layout_constraintStart_toStartOf="@+id/btn_continue_ui" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
