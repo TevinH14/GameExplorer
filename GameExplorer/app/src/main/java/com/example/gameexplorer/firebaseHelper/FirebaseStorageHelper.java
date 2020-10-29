@@ -76,6 +76,8 @@ public class FirebaseStorageHelper {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
+                    e.printStackTrace();
+                    mImageFinisher.onGotImage(null);
 
                 }
             });

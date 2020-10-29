@@ -78,15 +78,8 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
 
         setUpDrawerContent(mDrawerView);
 
-
         new RealTimeDatabaseHelper(this);
         RealTimeDatabaseHelper.loadName();
-
-        new FirebaseStorageHelper(this);
-        FirebaseStorageHelper.downloadImage();
-
-
-
         if(!isInFront){
             FragmentManager fragmentManager = getSupportFragmentManager();
             Fragment homeFragment = HomeFragment.newInstance();
@@ -171,6 +164,8 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public void OnNamePost(String _name) {
         setUpHeaderName(mDrawerView ,_name);
+        new FirebaseStorageHelper(this);
+        FirebaseStorageHelper.downloadImage();
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
