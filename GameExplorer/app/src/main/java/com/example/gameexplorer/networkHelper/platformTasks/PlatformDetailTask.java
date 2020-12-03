@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import com.example.gameexplorer.model.GamePlatform;
 import com.example.gameexplorer.model.Games;
 import com.example.gameexplorer.networkHelper.NetworkUtils;
+import com.example.gameexplorer.util.StringUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +34,9 @@ public class PlatformDetailTask extends AsyncTask<GamePlatform,Void, GamePlatfor
                                 + gp.getId());
                 try {
                     JSONObject object = new JSONObject(data);
-                    String description = object.getString("description");
+                    String rawDescription = object.getString("description");
+                    String description = StringUtil.removeHtml(rawDescription);
+
                     gp.setDescription(description);
                     data = NetworkUtils.getNetworkData(
                             "https://api.rawg.io/api/games?platforms="

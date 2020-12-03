@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import com.example.gameexplorer.R;
 import com.example.gameexplorer.firebaseHelper.RealTimeDatabaseHelper;
+import com.example.gameexplorer.fragment.gamesFragment.FavoriteFragment;
 import com.example.gameexplorer.fragment.gamesFragment.GameDetailFragment;
 import com.example.gameexplorer.model.GameDetail;
 import com.example.gameexplorer.model.Games;
@@ -16,14 +17,19 @@ public class GameDetailActivity extends AppCompatActivity implements GameDetailT
 RealTimeDatabaseHelper.GameExistFinished{
     public static final String GAME_DETAIL_EXTRA = "GAME_DETAIL_EXTRA";
 
-       private GameDetail mGameDetail;
+    private GameDetail mGameDetail;
+    private boolean mIsFromFavorite = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_detail);
         String slug = "";
+        mIsFromFavorite = false;
         if(getIntent() != null){
             slug = getIntent().getStringExtra(GAME_DETAIL_EXTRA);
+            mIsFromFavorite = getIntent().getBooleanExtra(FavoriteFragment.FROM_FAVORITE,false);
+
         }
 
         Toolbar toolbar = findViewById(R.id.toolbar_gd);
@@ -38,7 +44,7 @@ RealTimeDatabaseHelper.GameExistFinished{
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fl_gameDetail, GameDetailFragment.newInstance(null,false))
+                .replace(R.id.fl_gameDetail, GameDetailFragment.newInstance(null,false,mIsFromFavorite))
                 .commit();
     }
 
@@ -61,7 +67,7 @@ RealTimeDatabaseHelper.GameExistFinished{
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fl_gameDetail, GameDetailFragment.newInstance(mGameDetail,hasGame))
+                .replace(R.id.fl_gameDetail, GameDetailFragment.newInstance(mGameDetail,hasGame,mIsFromFavorite))
                 .commit();
     }
 

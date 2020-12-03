@@ -24,6 +24,7 @@ import java.util.ArrayList;
 public class FavoriteFragment extends Fragment implements RealTimeDatabaseHelper.FavoriteFinished {
 
     private ProgressBar mProgressbar;
+    public static String FROM_FAVORITE = "FROM_FAVORITE";
 
     public static FavoriteFragment newInstance() {
         return new FavoriteFragment();
@@ -56,6 +57,7 @@ public class FavoriteFragment extends Fragment implements RealTimeDatabaseHelper
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent gameDetailIntent = new Intent(getContext(), GameDetailActivity.class);
+                    gameDetailIntent.putExtra(FROM_FAVORITE,true);
                     gameDetailIntent.putExtra(GameDetailActivity.GAME_DETAIL_EXTRA, _gamesList
                             .get(position).getSlugName());
                     startActivity(gameDetailIntent);

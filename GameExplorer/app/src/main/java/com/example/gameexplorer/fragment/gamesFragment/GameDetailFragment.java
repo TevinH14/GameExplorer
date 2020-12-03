@@ -2,6 +2,7 @@ package com.example.gameexplorer.fragment.gamesFragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.transition.AutoTransition;
@@ -27,6 +28,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.gameexplorer.R;
 import com.example.gameexplorer.activity.GameDetailActivity;
+import com.example.gameexplorer.activity.HomeActivity;
 import com.example.gameexplorer.adapter.ViewPagerAdapter;
 import com.example.gameexplorer.adapter.gameAdapters.GameDetailAdapter;
 import com.example.gameexplorer.firebaseHelper.RealTimeDatabaseHelper;
@@ -44,16 +46,15 @@ public class GameDetailFragment extends Fragment implements
     private static GameDetail mGame;
     private static boolean mIsSaved;
     private boolean mIsVideo = false;
+    private static boolean mIsFromFavorite = false;
 
     // get/set game data to get detail in activity created
-    public static GameDetailFragment newInstance(GameDetail game, boolean isSaved) {
-        
-        Bundle args = new Bundle();
+    public static GameDetailFragment newInstance(GameDetail game, boolean isSaved, boolean isFromFavorite) {
         mGame = game;
         mIsSaved = isSaved;
-        GameDetailFragment fragment = new GameDetailFragment();
-        fragment.setArguments(args);
-        return fragment;
+        mIsFromFavorite = isFromFavorite;
+
+        return new GameDetailFragment();
     }
 
     @Nullable
@@ -70,19 +71,24 @@ public class GameDetailFragment extends Fragment implements
             if (item.getItemId() == R.id.menu_add) {
                 RealTimeDatabaseHelper.saveGame(mGame.getTitle(), mGame.getBackgroundImage(),
                         mGame.getSlugName(), mGame.getGameId());
-
                 Toast.makeText(getContext(), R.string.game_added,
                         Toast.LENGTH_LONG).show();
                 return true;
             } else if (item.getItemId() == R.id.menu_delete) {
                 RealTimeDatabaseHelper.removeGame(mGame.getGameId());
             }
-            if(getActivity() !=null){
+            if(getActivity() != null){
                 ((GameDetailActivity)getActivity()).replaceFragments();
             }
         }
         else if (item.getItemId() == android.R.id.home  && getActivity() != null) {
-            getActivity().finish();
+            if(!mIsFromFavorite) {
+                getActivity().finish();
+            }
+            else{
+                Intent favoriteIntent = new Intent(getContext(), HomeActivity.class);
+                startActivity(favoriteIntent);
+            }
             return true;
         }
         return false;
