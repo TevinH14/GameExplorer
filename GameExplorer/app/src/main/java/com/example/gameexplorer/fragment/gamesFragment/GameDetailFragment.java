@@ -82,13 +82,14 @@ public class GameDetailFragment extends Fragment implements
             }
         }
         else if (item.getItemId() == android.R.id.home  && getActivity() != null) {
-            if(!mIsFromFavorite) {
-                getActivity().finish();
-            }
-            else{
-                Intent favoriteIntent = new Intent(getContext(), HomeActivity.class);
-                startActivity(favoriteIntent);
-            }
+            getActivity().finish();
+//            if(!mIsFromFavorite) {
+//                getActivity().finish();
+//            }
+//            else{
+//                Intent favoriteIntent = new Intent(getContext(), HomeActivity.class);
+//                startActivity(favoriteIntent);
+//            }s
             return true;
         }
         return false;

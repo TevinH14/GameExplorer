@@ -37,16 +37,24 @@ public class FavoriteFragment extends Fragment implements RealTimeDatabaseHelper
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+       loadGames();
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        loadGames();
+    }
+
+    private void loadGames(){
         if(getView() != null) {
             mProgressbar = getView().findViewById(R.id.pg_gameIsloading_gd);
             mProgressbar.setVisibility(View.VISIBLE);
-
+            new RealTimeDatabaseHelper(this);
+            RealTimeDatabaseHelper.loadGame();
         }
-        new RealTimeDatabaseHelper(this);
-        RealTimeDatabaseHelper.loadGame();
-
     }
 
     @Override

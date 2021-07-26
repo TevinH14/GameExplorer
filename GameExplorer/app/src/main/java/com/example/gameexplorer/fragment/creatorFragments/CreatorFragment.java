@@ -39,6 +39,7 @@ public class CreatorFragment extends Fragment implements CreatorTask.OnCreatorFi
     private boolean mSorted = false;
     private int preLast;
     private ProgressBar mProgressBar;
+    a
     public static CreatorFragment newInstance() {
 
         Bundle args = new Bundle();
